@@ -6,9 +6,6 @@
     <title>Liu Pets - Estética Animal</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
     
     <style>
@@ -21,17 +18,22 @@
             min-height: 100vh;
         }
 
-        /* --- Cabeçalho --- */
         .cabecalho-liu {
-            background-color: white; position: relative; overflow: hidden; padding: 40px 20px; text-align: center; border-bottom: 2px solid #f0f0f0;
+            background-color: white; position: relative; overflow: hidden; padding: 30px 20px; text-align: center; border-bottom: 2px solid #f0f0f0;
         }
         .bolha-rosa { position: absolute; width: 300px; height: 300px; background-color: #f28ab6; border-radius: 50%; top: -150px; left: -100px; }
         .bolha-azul { position: absolute; width: 350px; height: 350px; background-color: #7eb8cc; border-radius: 50%; bottom: -180px; right: -80px; }
         .conteudo-cabecalho { position: relative; z-index: 1; }
-        .titulo-marca { color: #7eb8cc; font-weight: 900; font-size: 3.5rem; margin-bottom: -5px; }
+        .titulo-marca { color: #7eb8cc; font-weight: 900; font-size: 3.5rem; margin-bottom: -5px; line-height: 1; }
         .subtitulo-marca { color: #f28ab6; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 3px; }
+        
+        /* O truque do mix-blend-mode remove o fundo branco da imagem */
+        .img-cachorro { 
+            max-width: 120px; 
+            margin-bottom: 10px; 
+            mix-blend-mode: multiply; 
+        }
 
-        /* --- Formulário --- */
         .container-form {
             max-width: 600px; margin: 40px auto; background: rgba(255, 255, 255, 0.95); padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); flex: 1; position: relative; z-index: 2;
         }
@@ -42,52 +44,37 @@
         .btn-rosa {
             background-color: #f28ab6; border: none; color: white; font-weight: 900; padding: 15px; font-size: 1.2rem; width: 100%; border-radius: 12px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 6px rgba(242, 138, 182, 0.3); transition: all 0.3s ease;
         }
-        .btn-rosa:hover { background-color: #d978a1; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(242, 138, 182, 0.4); }
+        .btn-rosa:hover { background-color: #d978a1; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(242, 138, 182, 0.4); color: white; }
+        .btn-outline-rosa {
+            border: 2px solid #f28ab6; color: #f28ab6; font-weight: 900; padding: 12px; border-radius: 12px; text-transform: uppercase; width: 100%; transition: all 0.3s ease;
+        }
+        .btn-outline-rosa:hover { background-color: #f28ab6; color: white; }
 
-        .oculto { display: none; }
+        .oculto { display: none !important; }
 
-        /* --- NOVO: Rodapé com Bolhas e Google Reviews --- */
         .rodape-liu { 
-            background-color: white; 
-            position: relative; 
-            overflow: hidden; 
-            padding: 40px 20px 20px; 
-            margin-top: auto; 
-            border-top: 2px solid #f0f0f0;
-            text-align: center;
+            background-color: white; position: relative; overflow: hidden; padding: 40px 20px 20px; margin-top: auto; border-top: 2px solid #f0f0f0; text-align: center;
         }
         .bolha-rodape-rosa { position: absolute; width: 250px; height: 250px; background-color: #f28ab6; border-radius: 50%; bottom: -120px; right: -100px; opacity: 0.6; }
         .bolha-rodape-azul { position: absolute; width: 200px; height: 200px; background-color: #7eb8cc; border-radius: 50%; top: -80px; left: -80px; opacity: 0.6; }
-        
         .conteudo-rodape { position: relative; z-index: 1; }
-        
-        .google-reviews {
-            display: inline-block;
-            background: #fff;
-            padding: 15px 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-            border: 1px solid #eee;
-        }
+        .google-reviews { display: inline-block; background: #fff; padding: 15px 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid #eee; }
         .estrelas { color: #fbbc04; font-size: 1.5rem; letter-spacing: 2px; }
-        
         .text-rodape { color: #666; font-size: 0.9rem; margin: 2px 0; }
     </style>
 </head>
 <body>
 
-    <!-- Cabeçalho -->
     <header class="cabecalho-liu">
         <div class="bolha-rosa"></div>
         <div class="bolha-azul"></div>
         <div class="conteudo-cabecalho">
+            <img src="cachorrinho.jpg" alt="Mascote Liu Pets" class="img-cachorro" onerror="this.style.display='none'"> 
             <h1 class="titulo-marca">Liu Pets</h1>
             <p class="subtitulo-marca">Estética Animal</p>
         </div>
     </header>
 
-    <!-- Área do Formulário -->
     <main class="container container-form">
         
         <!-- ETAPA 1 -->
@@ -104,7 +91,7 @@
             <button type="button" class="btn btn-rosa" onclick="verificarCliente()">Continuar</button>
         </div>
 
-        <!-- ETAPA 2 -->
+        <!-- ETAPA 2 (Formulário Completo) -->
         <div id="etapa2" class="oculto">
             <div class="text-center mb-4">
                 <h4 id="mensagemBoasVindas" class="text-secondary fw-bold" style="color: #666 !important;">Complete seu agendamento</h4>
@@ -113,21 +100,23 @@
             <form id="formAgendamento">
                 <input type="hidden" id="whatsappFinal">
 
+                <!-- 1. Dados do Tutor -->
                 <h5 class="titulo-sessao">1. Dados do Tutor</h5>
-                <div class="mb-3">
+                <div class="mb-4">
                     <label for="nomeTutor" class="form-label">Seu Nome</label>
                     <input type="text" class="form-control" id="nomeTutor" placeholder="Ex: Maria" required>
                 </div>
 
-                <h5 class="titulo-sessao mt-4">2. Dados do Pet</h5>
+                <!-- 2. Dados do(s) Pet(s) -->
+                <h5 class="titulo-sessao">2. Dados do Pet</h5>
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="nomePet" class="form-label">Nome do Pet</label>
-                        <input type="text" class="form-control" id="nomePet" placeholder="Ex: Bob" required>
+                        <label for="nomePet1" class="form-label">Nome do Pet</label>
+                        <input type="text" class="form-control" id="nomePet1" placeholder="Ex: Bob" required>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="especie" class="form-label">Espécie</label>
-                        <select class="form-select" id="especie" required>
+                        <label for="especie1" class="form-label">Espécie</label>
+                        <select class="form-select" id="especie1" required>
                             <option value="" selected disabled>Selecione...</option>
                             <option value="Cachorro">Cachorro</option>
                             <option value="Gato">Gato</option>
@@ -135,24 +124,75 @@
                     </div>
                 </div>
 
+                <!-- Checkbox para Pet 2 -->
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="checkPet2" onchange="alternarPet2()">
+                    <label class="form-check-label fw-bold text-secondary" for="checkPet2" style="cursor: pointer;">
+                        + Adicionar outro pet (Máx. 2)
+                    </label>
+                </div>
+
+                <!-- Área do Pet 2 (Oculta por padrão) -->
+                <div id="areaPet2" class="row oculto p-3 mb-3" style="background-color: #f8f9fa; border-radius: 10px;">
+                    <h6 class="fw-bold" style="color: #7eb8cc;">Segundo Pet</h6>
+                    <div class="col-md-6 mb-3">
+                        <label for="nomePet2" class="form-label">Nome do 2º Pet</label>
+                        <input type="text" class="form-control" id="nomePet2" placeholder="Ex: Mia">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="especie2" class="form-label">Espécie</label>
+                        <select class="form-select" id="especie2">
+                            <option value="" selected disabled>Selecione...</option>
+                            <option value="Cachorro">Cachorro</option>
+                            <option value="Gato">Gato</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 3. Serviço e Horário com opção de Pacotes -->
                 <h5 class="titulo-sessao mt-4">3. Serviço e Horário</h5>
+                
                 <div class="mb-3">
-                    <label for="servico" class="form-label">Serviço Desejado</label>
-                    <select class="form-select" id="servico" required>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="tipoServico" id="tipoAvulso" value="avulso" checked onchange="alternarPacote()">
+                        <label class="form-check-label fw-bold" for="tipoAvulso">Serviço Avulso</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="tipoServico" id="tipoPacote" value="pacote" onchange="alternarPacote()">
+                        <label class="form-check-label fw-bold" for="tipoPacote" style="color: #f28ab6;">Prefere um pacote?</label>
+                    </div>
+                </div>
+
+                <!-- Lista de Serviços Avulsos -->
+                <div class="mb-4" id="areaAvulso">
+                    <label for="servicoAvulso" class="form-label">Selecione o Serviço</label>
+                    <select class="form-select" id="servicoAvulso" required>
                         <option value="" selected disabled>Escolha um serviço...</option>
-                        <option value="Banho Simples">Banho Simples</option>
+                        <option value="Banho">Banho</option>
                         <option value="Tosa Higiênica">Tosa Higiênica</option>
                         <option value="Tosa Completa">Tosa Completa</option>
+                        <option value="Hidratação">Hidratação</option>
+                        <option value="Penteados">Penteados</option>
+                    </select>
+                </div>
+
+                <!-- Lista de Pacotes (Oculta por padrão) -->
+                <div class="mb-4 oculto" id="areaPacote">
+                    <label for="servicoPacote" class="form-label">Selecione o Pacote</label>
+                    <select class="form-select" id="servicoPacote">
+                        <option value="" selected disabled>Escolha um pacote...</option>
+                        <option value="Pacote Semanal (4 Banhos + 1 Tosa Hig. + 1 Hidratação)">Semanal (4 Banhos + 1 Tosa Hig. + 1 Hidratação)</option>
+                        <option value="Pacote Quinzenal (2 Banhos + 1 Tosa Hig. + 2 Hidratações)">Quinzenal (2 Banhos + 1 Tosa Hig. + 2 Hidratações)</option>
                     </select>
                 </div>
                 
                 <div class="row mb-4">
                     <div class="col-md-6 mb-3 mb-md-0">
-                        <label for="dataAgendamento" class="form-label">Data</label>
+                        <label for="dataAgendamento" class="form-label">Data Sugerida</label>
                         <input type="date" class="form-control" id="dataAgendamento" required>
                     </div>
                     <div class="col-md-6">
-                        <label for="horaAgendamento" class="form-label">Horário</label>
+                        <label for="horaAgendamento" class="form-label">Horário Sugerido</label>
                         <select class="form-select" id="horaAgendamento" required>
                             <option value="" selected disabled>Selecione...</option>
                             <option value="09:00">09:00</option>
@@ -172,74 +212,155 @@
                 </div>
             </form>
         </div>
+
+        <!-- ETAPA 3 (Tela de Sucesso) -->
+        <div id="etapaSucesso" class="oculto text-center py-5">
+            <h2 class="titulo-marca mb-3">Prontinho! 🐾</h2>
+            <p class="fs-5 text-muted">Enviou a solicitação de agendamento?</p>
+            <p class="fw-bold" style="color: #7eb8cc;">Te responderemos no WhatsApp com a confirmação em breve!</p>
+            
+            <button class="btn btn-outline-rosa mt-4" onclick="reiniciarAgendamento()">Realizar novo agendamento</button>
+        </div>
+
     </main>
 
-    <!-- NOVO Rodapé -->
     <footer class="rodape-liu">
         <div class="bolha-rodape-azul"></div>
         <div class="bolha-rodape-rosa"></div>
         
         <div class="conteudo-rodape container">
-            
-            <!-- Widget de Reviews do Google -->
             <div class="google-reviews">
                 <div class="d-flex justify-content-center align-items-center">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo" style="width: 24px; margin-right: 10px;">
                     <span class="fw-bold" style="color: #444; font-size: 1.1rem;">Avaliação no Google</span>
                 </div>
                 <div class="estrelas mt-1">★★★★★</div>
-                <p class="mb-0 text-muted mt-1" style="font-size: 0.9rem;"><strong>5.0</strong> baseado em 36 avaliações</p>
+                <p class="mb-0 text-muted mt-1" style="font-size: 0.9rem;"><strong>5.0</strong> baseado em avaliações reais</p>
             </div>
-
             <p class="text-rodape fw-bold mt-2" style="color: #7eb8cc;">Liu Pets - Estética Animal</p>
             <p class="text-rodape">Contato: (27) 99736-0265 | Instagram: @liupetss</p>
-            <p class="text-rodape mt-3" style="font-size: 0.75rem; opacity: 0.7;">Projeto Acadêmico - Análise e Desenvolvimento de Sistemas (Multivix)</p>
         </div>
     </footer>
 
-    <!-- Script JavaScript (Mantido o mesmo que funcionou na etapa anterior) -->
     <script>
+        function alternarPet2() {
+            const areaPet2 = document.getElementById('areaPet2');
+            const isChecked = document.getElementById('checkPet2').checked;
+            
+            if(isChecked) {
+                areaPet2.classList.remove('oculto');
+                document.getElementById('nomePet2').required = true;
+                document.getElementById('especie2').required = true;
+            } else {
+                areaPet2.classList.add('oculto');
+                document.getElementById('nomePet2').required = false;
+                document.getElementById('especie2').required = false;
+                document.getElementById('nomePet2').value = "";
+                document.getElementById('especie2').value = "";
+            }
+        }
+
+        function alternarPacote() {
+            const isPacote = document.getElementById('tipoPacote').checked;
+            
+            if(isPacote) {
+                document.getElementById('areaAvulso').classList.add('oculto');
+                document.getElementById('servicoAvulso').required = false;
+                
+                document.getElementById('areaPacote').classList.remove('oculto');
+                document.getElementById('servicoPacote').required = true;
+            } else {
+                document.getElementById('areaAvulso').classList.remove('oculto');
+                document.getElementById('servicoAvulso').required = true;
+                
+                document.getElementById('areaPacote').classList.add('oculto');
+                document.getElementById('servicoPacote').required = false;
+            }
+        }
+
         function verificarCliente() {
             const telefone = document.getElementById('whatsappBusca').value;
-            if (telefone.trim() === "") { alert("Por favor, digite seu WhatsApp para continuar."); return; }
+            if (telefone.trim() === "") { alert("Por favor, digite seu WhatsApp."); return; }
+            
             document.getElementById('etapa1').classList.add('oculto');
             document.getElementById('etapa2').classList.remove('oculto');
             document.getElementById('whatsappFinal').value = telefone;
+            
             const dadosSalvos = localStorage.getItem(telefone);
             if (dadosSalvos) {
                 const cliente = JSON.parse(dadosSalvos);
                 document.getElementById('nomeTutor').value = cliente.nome;
-                document.getElementById('nomePet').value = cliente.pet;
-                document.getElementById('especie').value = cliente.especie;
+                document.getElementById('nomePet1').value = cliente.pet1;
+                document.getElementById('especie1').value = cliente.especie1;
+                
+                if(cliente.pet2 && cliente.especie2) {
+                    document.getElementById('checkPet2').checked = true;
+                    alternarPet2();
+                    document.getElementById('nomePet2').value = cliente.pet2;
+                    document.getElementById('especie2').value = cliente.especie2;
+                }
                 document.getElementById('mensagemBoasVindas').innerText = "Que bom te ver de novo, " + cliente.nome + "!";
-            } else {
-                document.getElementById('nomeTutor').value = "";
-                document.getElementById('nomePet').value = "";
-                document.getElementById('especie').value = "";
-                document.getElementById('mensagemBoasVindas').innerText = "Complete seu primeiro agendamento!";
             }
         }
+
         function voltarEtapa1() {
             document.getElementById('etapa2').classList.add('oculto');
             document.getElementById('etapa1').classList.remove('oculto');
         }
+
+        function reiniciarAgendamento() {
+            document.getElementById('etapaSucesso').classList.add('oculto');
+            document.getElementById('etapa1').classList.remove('oculto');
+            document.getElementById('formAgendamento').reset();
+            alternarPet2();
+            alternarPacote();
+        }
+
         document.getElementById('formAgendamento').addEventListener('submit', function(event) {
             event.preventDefault(); 
+            
             const telefone = document.getElementById('whatsappFinal').value;
             const nomeTutor = document.getElementById('nomeTutor').value;
-            const nomePet = document.getElementById('nomePet').value;
-            const especie = document.getElementById('especie').value;
-            const servico = document.getElementById('servico').value;
+            
+            const nomePet1 = document.getElementById('nomePet1').value;
+            const especie1 = document.getElementById('especie1').value;
+            
+            const checkPet2 = document.getElementById('checkPet2').checked;
+            const nomePet2 = document.getElementById('nomePet2').value;
+            const especie2 = document.getElementById('especie2').value;
+            
+            const isPacote = document.getElementById('tipoPacote').checked;
+            const servicoEscolhido = isPacote ? document.getElementById('servicoPacote').value : document.getElementById('servicoAvulso').value;
+
             const dataPura = document.getElementById('dataAgendamento').value;
             const dataFormatada = dataPura.split('-').reverse().join('/');
             const hora = document.getElementById('horaAgendamento').value;
-            const dadosCliente = { nome: nomeTutor, pet: nomePet, especie: especie };
+            
+            const dadosCliente = { 
+                nome: nomeTutor, 
+                pet1: nomePet1, 
+                especie1: especie1,
+                pet2: checkPet2 ? nomePet2 : "",
+                especie2: checkPet2 ? especie2 : ""
+            };
             localStorage.setItem(telefone, JSON.stringify(dadosCliente));
-            const mensagem = `Olá Liu Pets! Me chamo ${nomeTutor}. Gostaria de agendar um(a) *${servico}* para meu ${especie} (${nomePet}).\n\n📅 *Data:* ${dataFormatada}\n⏰ *Horário:* ${hora}\n\nPodem confirmar o agendamento?`;
+            
+            let textoPets = `1. ${especie1} - ${nomePet1}`;
+            if(checkPet2) {
+                textoPets += `\n2. ${especie2} - ${nomePet2}`;
+            }
+
+            const mensagem = `Olá Liu Pets! Me chamo ${nomeTutor}.\nGostaria de agendar: *${servicoEscolhido}*\n\n🐾 *Para o(s) pet(s):*\n${textoPets}\n\n📅 *Data:* ${dataFormatada}\n⏰ *Horário:* ${hora}\n\nPodem confirmar minha solicitação?`;
+            
             const numeroLiuPets = "5527997360265";
             const linkWhatsApp = `https://wa.me/${numeroLiuPets}?text=${encodeURIComponent(mensagem)}`;
+            
             window.open(linkWhatsApp, '_blank');
+            
+            document.getElementById('etapa2').classList.add('oculto');
+            document.getElementById('etapaSucesso').classList.remove('oculto');
         });
+
         document.getElementById('dataAgendamento').addEventListener('change', function(e) {
             const dataSelecionada = new Date(e.target.value + 'T00:00:00');
             const diaSemana = dataSelecionada.getDay(); 
