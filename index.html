@@ -291,7 +291,7 @@
             }
         }
 
-        function verificarCliente() {
+function verificarCliente() {
             const telefone = document.getElementById('whatsappBusca').value;
             if (telefone.trim() === "") { alert("Por favor, digite seu WhatsApp."); return; }
             
@@ -302,17 +302,22 @@
             const dadosSalvos = localStorage.getItem(telefone);
             if (dadosSalvos) {
                 const cliente = JSON.parse(dadosSalvos);
-                document.getElementById('nomeTutor').value = cliente.nome;
-                document.getElementById('nomePet1').value = cliente.pet1;
-                document.getElementById('especie1').value = cliente.especie1;
+                
+                // O || "" garante que, se o dado for undefined, o campo fica vazio e mostra o placeholder
+                document.getElementById('nomeTutor').value = cliente.nome || "";
+                document.getElementById('nomePet1').value = cliente.pet1 || "";
+                document.getElementById('especie1').value = cliente.especie1 || "";
                 
                 if(cliente.pet2 && cliente.especie2) {
                     document.getElementById('checkPet2').checked = true;
                     alternarPet2();
-                    document.getElementById('nomePet2').value = cliente.pet2;
-                    document.getElementById('especie2').value = cliente.especie2;
+                    document.getElementById('nomePet2').value = cliente.pet2 || "";
+                    document.getElementById('especie2').value = cliente.especie2 || "";
                 }
-                document.getElementById('mensagemBoasVindas').innerText = "Que bom te ver de novo, " + cliente.nome + "!";
+                
+                if(cliente.nome) {
+                    document.getElementById('mensagemBoasVindas').innerText = "Que bom te ver de novo, " + cliente.nome + "!";
+                }
             }
         }
 
