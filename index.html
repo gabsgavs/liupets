@@ -291,7 +291,7 @@
             }
         }
 
-function verificarCliente() {
+        function verificarCliente() {
             const telefone = document.getElementById('whatsappBusca').value;
             if (telefone.trim() === "") { alert("Por favor, digite seu WhatsApp."); return; }
             
@@ -303,7 +303,6 @@ function verificarCliente() {
             if (dadosSalvos) {
                 const cliente = JSON.parse(dadosSalvos);
                 
-                // O || "" garante que, se o dado for undefined, o campo fica vazio e mostra o placeholder
                 document.getElementById('nomeTutor').value = cliente.nome || "";
                 document.getElementById('nomePet1').value = cliente.pet1 || "";
                 document.getElementById('especie1').value = cliente.especie1 || "";
@@ -362,6 +361,22 @@ function verificarCliente() {
                 especie2: checkPet2 ? especie2 : ""
             };
             localStorage.setItem(telefone, JSON.stringify(dadosCliente));
+
+            // GUARDA O AGENDAMENTO PARA SER LIDO NO PAINEL ADMIN
+            const novoAgendamento = {
+                id: Date.now(),
+                horario: hora,
+                data: dataFormatada,
+                nomeTutor: nomeTutor,
+                telefone: telefone,
+                nomePet: checkPet2 ? nomePet1 + " e " + nomePet2 : nomePet1,
+                especie: checkPet2 ? especie1 + " / " + especie2 : especie1,
+                servico: servicoEscolhido
+            };
+
+            let listaAgendamentos = JSON.parse(localStorage.getItem('agendamentosGerais')) || [];
+            listaAgendamentos.push(novoAgendamento);
+            localStorage.setItem('agendamentosGerais', JSON.stringify(listaAgendamentos));
             
             let textoPets = `1. ${especie1} - ${nomePet1}`;
             if(checkPet2) {
