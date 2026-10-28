@@ -27,7 +27,7 @@
         .titulo-marca { color: #7eb8cc; font-weight: 900; font-size: 3.5rem; margin-bottom: -5px; line-height: 1; }
         .subtitulo-marca { color: #f28ab6; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 3px; }
         
-        /* O truque do mix-blend-mode remove o fundo branco da imagem */
+        /* O truque do mix-blend-mode remove o fundo branco da imagem JPG */
         .img-cachorro { 
             max-width: 120px; 
             margin-bottom: 10px; 
@@ -188,8 +188,11 @@
                 
                 <div class="row mb-4">
                     <div class="col-md-6 mb-3 mb-md-0">
-                        <label for="dataAgendamento" class="form-label">Data Sugerida</label>
+                        <label for="dataAgendamento" class="form-label" id="labelData">Data Sugerida</label>
                         <input type="date" class="form-control" id="dataAgendamento" required>
+                        <small id="helpData" class="form-text text-muted oculto" style="font-size: 0.8rem; color: #f28ab6 !important; font-weight: bold;">
+                            As demais sessões do pacote serão agendadas no local.
+                        </small>
                     </div>
                     <div class="col-md-6">
                         <label for="horaAgendamento" class="form-label">Horário Sugerido</label>
@@ -262,6 +265,8 @@
 
         function alternarPacote() {
             const isPacote = document.getElementById('tipoPacote').checked;
+            const labelData = document.getElementById('labelData');
+            const helpData = document.getElementById('helpData');
             
             if(isPacote) {
                 document.getElementById('areaAvulso').classList.add('oculto');
@@ -269,12 +274,18 @@
                 
                 document.getElementById('areaPacote').classList.remove('oculto');
                 document.getElementById('servicoPacote').required = true;
+
+                labelData.innerText = "Data da 1ª Sessão";
+                helpData.classList.remove('oculto');
             } else {
                 document.getElementById('areaAvulso').classList.remove('oculto');
                 document.getElementById('servicoAvulso').required = true;
                 
                 document.getElementById('areaPacote').classList.add('oculto');
                 document.getElementById('servicoPacote').required = false;
+
+                labelData.innerText = "Data Sugerida";
+                helpData.classList.add('oculto');
             }
         }
 
