@@ -31,7 +31,7 @@
             font-size: 3.5rem; 
             margin-bottom: -5px; 
             line-height: 1; 
-            -webkit-text-stroke: 1.5px #222; /* Contorno preto para resolver o problema visual */
+            -webkit-text-stroke: 1.5px #222; 
             text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
         }
         
@@ -195,7 +195,7 @@
                     </select>
                 </div>
 
-                <!-- NOVO: Opção Bike Dog -->
+                <!-- Opção Bike Dog -->
                 <div class="mb-4 p-3" style="background-color: #f8f9fa; border-radius: 10px; border-left: 5px solid #f28ab6;">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="checkBikeDog">
@@ -220,7 +220,7 @@
                     <div class="col-md-6">
                         <label for="horaAgendamento" class="form-label">Horário Sugerido</label>
                         <select class="form-select" id="horaAgendamento" required>
-                            <option value="" selected disabled>Selecione...</option>
+                            <option value="" selected disabled>Primeiro selecione a data...</option>
                             <option value="08:00">08:00</option>
                             <option value="09:00">09:00</option>
                             <option value="10:00">10:00</option>
@@ -355,7 +355,66 @@
             document.getElementById('formAgendamento').reset();
             alternarPet2();
             alternarPacote();
+            atualizarHorariosDisponiveis(); // Reseta o bloqueio de horas
         }
+
+        // --- NOVA FUNÇÃO: VERIFICA DISPONIBILIDADE NO BANCO DE DADOS ---
+        function atualizarHorariosDisponiveis() {
+            const inputData = document.getElementById('dataAgendamento').value;
+            const selectHora = document.getElementById('horaAgendamento');
+            
+            // Reseta todas as opções para liberadas
+            Array.from(selectHora.options).forEach(option => {
+                if(option.value !== "") {
+                    option.disabled = false;
+                    option.text = option.value;
+                }
+            });
+
+            if (!inputData) return;
+
+            // Formata a data escolhida para o padrão salvo no DB (DD/MM/YYYY)
+            const dataFormatada = inputData.split('-').reverse().join('/');
+            
+            // Puxa os dados do DB (localStorage)
+            const agendamentosSalvos = JSON.parse(localStorage.getItem('agendamentosGerais')) || [];
+            
+            // Mapeia os horários ocupados naquele dia (seja por bloqueio da Admin ou por outro cliente, ignorando os cancelados)
+            const horariosOcupados = agendamentosSalvos
+                .filter(agenda => agenda.data === dataFormatada && agenda.status !== 'cancelado')
+                .map(agenda => agenda.horario);
+            
+            // Bloqueia no select os horários que já estão ocupados
+            Array.from(selectHora.options).forEach(option => {
+                if(horariosOcupados.includes(option.value)) {
+                    option.disabled = true;
+                    option.text = option.value + " (Indisponível)";
+                }
+            });
+
+            // Se o horário atual escolhido pelo usuário estiver bloqueado agora, limpa o select
+            if(selectHora.options[selectHora.selectedIndex] && selectHora.options[selectHora.selectedIndex].disabled) {
+                selectHora.value = "";
+            }
+            
+            // Muda a primeira opção (placeholder) de forma amigável
+            selectHora.options[0].text = "Selecione um horário...";
+        }
+
+        // Listener para a mudança de data
+        document.getElementById('dataAgendamento').addEventListener('change', function(e) {
+            const dataSelecionada = new Date(e.target.value + 'T00:00:00');
+            const diaSemana = dataSelecionada.getDay(); 
+            
+            if(diaSemana === 0 || diaSemana === 1) {
+                alert("A Liu Pets não funciona aos Domingos e Segundas. Por favor, escolha outra data.");
+                e.target.value = ''; 
+                atualizarHorariosDisponiveis();
+            } else {
+                // Ao escolher uma data válida, roda a função que bloqueia os horários ocupados
+                atualizarHorariosDisponiveis();
+            }
+        });
 
         document.getElementById('formAgendamento').addEventListener('submit', function(event) {
             event.preventDefault(); 
@@ -420,15 +479,6 @@
             
             document.getElementById('etapa2').classList.add('oculto');
             document.getElementById('etapaSucesso').classList.remove('oculto');
-        });
-
-        document.getElementById('dataAgendamento').addEventListener('change', function(e) {
-            const dataSelecionada = new Date(e.target.value + 'T00:00:00');
-            const diaSemana = dataSelecionada.getDay(); 
-            if(diaSemana === 0 || diaSemana === 1) {
-                alert("A Liu Pets não funciona aos Domingos e Segundas. Por favor, escolha outra data.");
-                e.target.value = ''; 
-            }
         });
     </script>
 </body>
